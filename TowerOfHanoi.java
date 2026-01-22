@@ -16,8 +16,11 @@
  *   2. Move the largest disk from source to destination
  *   3. Move n-1 disks from auxiliary to destination (using source as helper)
  * 
- * @author Your Name
+ * @author Bianca Baccay
  */
+
+// updateTowers, getPeg, displayTowers, initializeTowers
+
 public class TowerOfHanoi {
     
     // Part 3: Move counter (you'll add this)
@@ -41,7 +44,9 @@ public class TowerOfHanoi {
      */
     public static void moveDisks(int n, char source, char destination, char auxiliary) {
         // TODO: Implement base case
-        
+        if (n == 1) {
+
+        }
         
         // TODO: Implement recursive case (3 steps)
         
