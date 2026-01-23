@@ -19,7 +19,7 @@
  * @author Bianca Baccay
  */
 
-// updateTowers, getPeg, displayTowers, initializeTowers
+// updateTowers, getPeg, initializeTowers
 
 public class TowerOfHanoi {
     
@@ -42,14 +42,31 @@ public class TowerOfHanoi {
      * @param destination the destination peg (e.g., 'C')
      * @param auxiliary the auxiliary peg (e.g., 'B')
      */
+     
+    
     public static void moveDisks(int n, char source, char destination, char auxiliary) {
         // TODO: Implement base case
         if (n == 1) {
-
+            System.out.println("Move disk" + n + "from" + source + "to" + destination);
         }
+        int previousInt = n-1;
         
         // TODO: Implement recursive case (3 steps)
+        System.out.println("Move disk " + previousInt + " from " + source + " to " + auxiliary);
+        System.out.println("Move disk " + n + " from " + source + " to " + destination);
+        System.out.println("Move disk " + previousInt + " from " + auxiliary + " to " + destination);
         
+    }
+    
+    public static int[] initializeTowers(int n) { // Sets all disks at tower A
+        int[] A = new int[n];
+        for (int i = 0; i < n; i++) {
+            A[i] = n-i;
+        }
+        return A;
+    }
+    
+    public static void getPeg(int[] A, int[] B, int[] C) {
         
     }
     
@@ -99,6 +116,9 @@ public class TowerOfHanoi {
     
     public static void main(String[] args) {
         int n = 3; // Start with 3 disks
+        int[] towerA = initializeTowers(n);
+        int[] towerB = new int[n];
+        int[] towerC = new int[n];
         
         System.out.println("Tower of Hanoi - " + n + " disks");
         System.out.println("Moving disks from A to C using B\n");
