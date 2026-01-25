@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Tower of Hanoi Lab
  * 
@@ -22,6 +25,9 @@
 // updateTowers, getPeg, initializeTowers
 
 public class TowerOfHanoi {
+    static ArrayList<Integer> towerA = new ArrayList<>();
+    static ArrayList<Integer> towerB = new ArrayList<>();
+    static ArrayList<Integer> towerC = new ArrayList<>();
     
     // Part 3: Move counter (you'll add this)
     private static int moveCount = 0;
@@ -47,15 +53,17 @@ public class TowerOfHanoi {
     public static void moveDisks(int n, char source, char destination, char auxiliary) {
         // TODO: Implement base case
         if (n == 1) {
-            System.out.println("Move disk" + n + "from" + source + "to" + destination);
-        }
-        int previousInt = n-1;
-        
+            System.out.println("\nMove disk " + n + " from " + source + " to " + destination);
+            displayTowers(source, destination);
+            moveCount++;
+        } else {
+        moveDisks(n-1, source, auxiliary, destination);
         // TODO: Implement recursive case (3 steps)
-        System.out.println("Move disk " + previousInt + " from " + source + " to " + auxiliary);
-        System.out.println("Move disk " + n + " from " + source + " to " + destination);
-        System.out.println("Move disk " + previousInt + " from " + auxiliary + " to " + destination);
-        
+        System.out.println("\nMove disk " + n + " from " + source + " to " + destination);
+        displayTowers(source, destination);
+        moveCount++;
+        moveDisks(n-1, auxiliary, destination, source);
+        }
     }
     
     public static int[] initializeTowers(int n) { // Sets all disks at tower A
@@ -66,9 +74,6 @@ public class TowerOfHanoi {
         return A;
     }
     
-    public static void getPeg(int[] A, int[] B, int[] C) {
-        
-    }
     
     /**
      * PART 2: Add visualization
@@ -85,10 +90,41 @@ public class TowerOfHanoi {
      * Hint: You'll need to track which disks are on which peg.
      * Consider using ArrayList<Integer> for each peg.
      */
-    public static void displayTowers() {
+    public static void displayTowers(char source, char destination) {
+        ArrayList<Integer> src = towerA;
+        ArrayList<Integer> des = towerC;
+        
+        if (source == 'A') {
+            src = towerA;
+        } else if (source == 'B') {
+            src = towerB;
+        } else if (source == 'C') {
+            src = towerC;
+        }
+        if (destination == 'A') {
+            des = towerA;
+        } else if (destination == 'B') {
+            des = towerB;
+        } else if (destination == 'C') {
+            des = towerC;
+        }
+        
+        
+        des.add(src.get(src.size()-1));
+        src.remove(src.size()-1);
+        
         // TODO: Implement tower visualization
         System.out.println("--- Tower State ---");
-        // Display pegs A, B, C and their disks
+        System.out.println("A: " + towerA);
+        System.out.println("B: " + towerB);
+        System.out.println("C: " + towerC);
+        
+    }
+    
+    public static void initializeTowers(int n, ArrayList<Integer> tower) {
+        for (int i = n; i > 0; i--) {
+            tower.add(i);
+        }
     }
     
     /**
@@ -116,26 +152,42 @@ public class TowerOfHanoi {
     
     public static void main(String[] args) {
         int n = 3; // Start with 3 disks
-        int[] towerA = initializeTowers(n);
-        int[] towerB = new int[n];
-        int[] towerC = new int[n];
         
         System.out.println("Tower of Hanoi - " + n + " disks");
         System.out.println("Moving disks from A to C using B\n");
-        
+        initializeTowers(n, towerA);
         // Reset move counter
         moveCount = 0;
         
         // Solve the puzzle
         moveDisks(n, 'A', 'C', 'B');
         
+        towerC.clear();
         // Display statistics
         printStatistics(n);
         
         // Test with different numbers of disks
         System.out.println("\n\n=== Try with 4 disks ===");
+        initializeTowers(4, towerA);
         moveCount = 0;
         moveDisks(4, 'A', 'C', 'B');
+        towerC.clear();
         printStatistics(4);
+        
+        // Test with different numbers of disks
+        System.out.println("\n\n=== Try with 5 disks ===");
+        initializeTowers(5, towerA);
+        moveCount = 0;
+        moveDisks(5, 'A', 'C', 'B');
+        towerC.clear();
+        printStatistics(5);
+        
+        // Test with different numbers of disks
+        System.out.println("\n\n=== Try with 7 disks ===");
+        initializeTowers(7, towerA);
+        moveCount = 0;
+        moveDisks(7, 'A', 'C', 'B');
+        towerC.clear();
+        printStatistics(7);
     }
 }
